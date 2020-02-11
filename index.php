@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['login'])){
+if (!isset($_SESSION['login'])) {
   header("Location: login.php");
   exit;
 }
@@ -30,13 +30,13 @@ $rawdata = (query($query));
 <body>
   <nav class="navbar navbar-expand-lg sticky-top" style="background-color: #188751;">
     <a class="text-light" href="index.php" style="font-size: 25px;">SpirulinaIoT</a>
-    <a href="" class="text-light ml-auto"><?= $_SESSION['nama'];?></a>
+    <a href="" class="text-light ml-auto"><?= $_SESSION['nama']; ?></a>
     <a href="logout.php" class="text-light ml-2">Logout</a>
     <!-- <a href="logout.php" class=""></a> -->
   </nav>
 
   <!-- Container for main page-->
-  <div class="mt-2">
+  <div class="pt-2 pr-5 pr-2">
     <div class="row no-gutters">
       <!-- Start of sticky sidebar-->
       <nav class="col-sm-2 border-right">
@@ -69,7 +69,7 @@ $rawdata = (query($query));
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">Intensitas</h5>
-                <p class="text-center" style="font-size: 50px;" id="absorbance"><?= $rawdata[count($rawdata)-1]['ints']; ?></p>
+                <p class="text-center" style="font-size: 50px;" id="absorbance"><?= $rawdata[count($rawdata) - 1]['ints']; ?></p>
               </div>
             </div>
           </div>
@@ -77,7 +77,7 @@ $rawdata = (query($query));
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">Transmitansi</h5>
-                <p class="text-center" style="font-size: 50px;" id="absorbance"><?= $rawdata[count($rawdata)-1]['trans']; ?></p>
+                <p class="text-center" style="font-size: 50px;" id="absorbance"><?= $rawdata[count($rawdata) - 1]['trans']; ?></p>
               </div>
             </div>
           </div>
@@ -85,7 +85,7 @@ $rawdata = (query($query));
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">Absorbansi</h5>
-                <p class="text-center" style="font-size: 50px;" id="absorbance"><?= $rawdata[count($rawdata)-1]['adso']; ?></p>
+                <p class="text-center" style="font-size: 50px;" id="absorbance"><?= $rawdata[count($rawdata) - 1]['adso']; ?></p>
               </div>
             </div>
           </div>
@@ -149,6 +149,7 @@ $rawdata = (query($query));
           </div>
 
         </div>
+        
         <!-- End of main page-->
       </div>
 
@@ -166,8 +167,139 @@ $rawdata = (query($query));
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-    <script type="text/javascript" src="api/drawlinechart.js"></script>
-    
+    <!-- <script type="text/javascript" src="api/drawlinechart.js"></script> -->
+    <script>
+        chartadsorbansi();
+        chartVoltase();
+        chartIntensitas();
+        chartTransmitansi();
+        async function chartIntensitas(){
+        await getdata();
+        var ctx = document.getElementById('Intensitas').getContext('2d');
+        var myChart = new Chart(ctx, {
+        type: 'line',
+        data: { 
+        labels: jsarray, 
+        datasets: [
+                {label: 'Kurva Intensitas', 
+                data: jsdata,              
+                backgroundColor: 'rgba( 255,99,132,5)',
+                borderColor: 'rgba(255, 159, 64, 1)',
+                borderWidth: 3,
+                fill:false
+        }]
+        },
+        options: {
+        scales: {
+                yAxes: [{
+                ticks: {
+                beginAtZero: true
+                }
+                }]
+        }
+        }
+        });
+}
+        async function chartVoltase(){
+        await getdata();
+        var ctx = document.getElementById('Voltase').getContext('2d');
+        var myChart = new Chart(ctx, {
+        type: 'line',
+        data: { 
+        labels: jsarray, 
+        datasets: [
+                {label: 'Kurva Voltase', 
+                data: jsdata,              
+                backgroundColor: 'rgba( 255,99,132,5)',
+                borderColor: 'rgba(255, 159, 64, 1)',
+                borderWidth: 3,
+                fill:false
+        }]
+        },
+        options: {
+        scales: {
+                yAxes: [{
+                ticks: {
+                beginAtZero: true
+                }
+                }]
+        }
+        }
+        });
+}
+        async function chartTransmitansi(){
+        await getdata();
+        var ctx = document.getElementById('Transmitansi').getContext('2d');
+        var myChart = new Chart(ctx, {
+        type: 'line',
+        data: { 
+        labels: jsarray, 
+        datasets: [
+                {label: 'Kurva Transmitansi', 
+                data: jsdata,              
+                backgroundColor: 'rgba( 255,99,132,5)',
+                borderColor: 'rgba(255, 159, 64, 1)',
+                borderWidth: 3,
+                fill:false
+        }]
+        },
+        options: {
+        scales: {
+                yAxes: [{
+                ticks: {
+                beginAtZero: true
+                }
+                }]
+        }
+        }
+        });
+}
+        async function chartadsorbansi(){
+        await getdata();
+        var ctx = document.getElementById('Adsorbansi').getContext('2d');
+        var myChart = new Chart(ctx, {
+        type: 'line',
+        data: { 
+        labels: jsarray, 
+        datasets: [
+                {label: 'Kurva Adsorbansi', 
+                data: jsdata,              
+                backgroundColor: 'rgba( 255,99,132,5)',
+                borderColor: 'rgba(255, 159, 64, 1)',
+                borderWidth: 3,
+                fill:false
+        }]
+        },
+        options: {
+        scales: {
+                yAxes: [{
+                ticks: {
+                beginAtZero: true
+                }
+                }]
+        }
+        }
+        });
+}
+        async function getdata(){
+                const url = "api/chartdata.php"
+                const response = await fetch(url);
+                const jsondata = await response.json();
+
+                jsarray = [];
+                jsdata = [];
+
+                for (let i= 0; i < Object.keys(jsondata).length; i++) {
+                        jsarray.push(jsondata[i]['dates']);
+                        jsdata.push(jsondata[i]['volt']);
+                        // console.log(jsarray);
+                }
+
+                console.log(jsarray);
+                console.log(jsdata);
+        }
+        </script>
+
 </body>
 
 </html>
