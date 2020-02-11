@@ -4,22 +4,22 @@ if (isset($_SESSION['login'])) {
     header("Location: index.php");
     exit;
 }
-// $conn = mysqli_connect("localhost", "root", "", "user1");
-$conn = mysqli_connect("localhost", "belajar03", "75648988ipa", "id12045401_belajar03");
+$conn = mysqli_connect("localhost", "root", "", "user1");
+// $conn = mysqli_connect("localhost", "belajar03", "75648988ipa", "id12045401_belajar03");
 if (isset($_POST['masuk'])) {
 
     $email = $_POST['email'];
     $pass = $_POST['pass'];
 
-    $result = mysqli_query($conn, "SELECT * FROM userid WHERE useremail = '$email'");
-
+    $result = mysqli_query($conn, "SELECT * FROM useraccount WHERE email = '$email'");
+    
     if (mysqli_num_rows($result) === 1) {
         // cek password
         
         $row = mysqli_fetch_assoc($result);
         $nama = $row["username"];
-        $profile_picture = $row["userpic"];
-        if ($pass == $row["userpass"]) {
+        $profile_picture = $row["profile_picture"];
+        if ($pass == $row["password"]) {
             //set session
             echo 'success';
             $_SESSION['login'] = true;
