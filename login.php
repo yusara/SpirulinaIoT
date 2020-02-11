@@ -5,7 +5,7 @@ if (isset($_SESSION['login'])) {
     exit;
 }
 // $conn = mysqli_connect("localhost", "root", "", "user1");
-$conn = mysqli_connect("localhost", "belajar03", "75648988ipa", "id12045401_belajar03");
+$conn = mysqli_connect("localhost", "id12045401_belajar03", "75648988ipa", "id12045401_belajar03");
 if (isset($_POST['masuk'])) {
 
     $email = $_POST['email'];
@@ -21,7 +21,6 @@ if (isset($_POST['masuk'])) {
         $profile_picture = $row["profile_picture"];
         if ($pass == $row["password"]) {
             //set session
-            echo 'success';
             $_SESSION['login'] = true;
             $_SESSION['nama'] = $nama;            
             header("Location: index.php");
@@ -31,8 +30,11 @@ if (isset($_POST['masuk'])) {
             echo 'Password salah';
         }
     }
+    else{
+        $error = true;
+    }
 
-    $error = true;
+    
 }
 ?>
 <!DOCTYPE html>
