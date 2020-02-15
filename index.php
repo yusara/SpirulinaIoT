@@ -1,13 +1,13 @@
 <?php
 session_start();
 if (!isset($_SESSION['login'])) {
-  header("Location: login.php");
+  header("Location: /spirulinaiot/page/login.php");
   exit;
 }
 require 'api/function.php';
 
 $query = "SELECT * FROM device0001";
-$rawdata = (query($query));
+$rawdata = query($query);
 // var_dump($rawdata);
 ?>
 
