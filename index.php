@@ -32,7 +32,7 @@ $rawdata = query($query);
     <a class="text-light" href="index.php" style="font-size: 25px;">SpirulinaIoT</a>
     <a href="" class="text-light ml-auto"><?= $_SESSION['nama']; ?></a>
     <a href="logout.php" class="text-light ml-2">Logout</a>
-    <!-- <a href="logout.php" class=""></a> -->
+    
   </nav>
 
   <!-- Container for main page-->
@@ -42,13 +42,13 @@ $rawdata = query($query);
       <nav class="col-sm-2 border-right">
         <ul class="nav flex-column">
           <li class="nav-item active" href="#">
-            <a class="nav-link" href="index.php">Live Now!<span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="page/index.php">Live Now!<span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="newchannel.php">New Channel</a>
+            <a class="nav-link" href="page/newchannel.php">New Channel</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="history.php">History</a>
+            <a class="nav-link" href="page/history.php">History</a>
           </li>
         </ul>
       </nav>

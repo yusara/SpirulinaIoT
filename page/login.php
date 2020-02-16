@@ -23,7 +23,7 @@ if (isset($_POST['masuk'])) {
             //set session
             $_SESSION['login'] = true;
             $_SESSION['nama'] = $nama;            
-            header("Location: index.php");
+            header("Location: ../index.php");
             exit;
         }
         else{

@@ -28,9 +28,9 @@ if (isset($_POST['masuk'])) {
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="css/bootstrap.css"> <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/style.css"> <!-- File CSS -->
-    <link rel="stylesheet" href="css/style2.css">
+    <link rel="stylesheet" href="../css/bootstrap.css"> <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../css/style.css"> <!-- File CSS -->
+    <link rel="stylesheet" href="../css/style2.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script> <!-- Library Chart Js -->
 
 
@@ -39,9 +39,9 @@ if (isset($_POST['masuk'])) {
 
 <body>
     <nav class="navbar navbar-expand-lg sticky-top" style="background-color: #188751;">
-        <a class="text-light" href="index.php" style="font-size: 25px;">SpirulinaIoT</a>
+        <a class="text-light" href="../index.php" style="font-size: 25px;">SpirulinaIoT</a>
         <a href="" class="text-light ml-auto"><?= $_SESSION['nama']; ?></a>
-        <a href="logout.php" class="text-light ml-2">Logout</a>
+        <a href="../logout.php" class="text-light ml-2">Logout</a>
         <!-- <a href="logout.php" class=""></a> -->
     </nav>
 
@@ -52,7 +52,7 @@ if (isset($_POST['masuk'])) {
             <nav class="col-sm-2 border-right">
                 <ul class="nav flex-column">
                     <li class="nav-item active" href="#">
-                        <a class="nav-link" href="index.php">Live Now!<span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="../index.php">Live Now!<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="newchannel.php">New Channel</a>

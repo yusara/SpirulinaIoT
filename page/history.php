@@ -7,9 +7,9 @@ if (!isset($_SESSION['login'])) {
 require '../api/function.php';
 
 $user = $_SESSION['nama'];
-$query = "SELECT * FROM channels WHERE user = '$user'";
+$query = "SELECT * FROM channels WHERE username = '$user'";
 $history = (query($query));
-// var_dump($rawdata);
+// var_dump($history);
 ?>
 
 <!doctype html>
@@ -30,20 +30,20 @@ $history = (query($query));
 
 <body>
     <nav class="navbar navbar-expand-lg sticky-top" style="background-color: #188751;">
-        <a class="text-light" href="index.php" style="font-size: 25px;">SpirulinaIoT</a>
+        <a class="text-light" href="../index.php" style="font-size: 25px;">SpirulinaIoT</a>
         <a href="" class="text-light ml-auto"><?= $_SESSION['nama']; ?></a>
-        <a href="logout.php" class="text-light ml-2">Logout</a>
+        <a href="../logout.php" class="text-light ml-2">Logout</a>
         <!-- <a href="logout.php" class=""></a> -->
     </nav>
 
     <!-- Container for main page-->
-    <div class="mt-2">
+    <div class="mt-2 pr-2 pr-5">
         <div class="row no-gutters">
             <!-- Start of sticky sidebar-->
             <nav class="col-sm-2 border-right">
                 <ul class="nav flex-column">
                     <li class="nav-item active" href="#">
-                        <a class="nav-link" href="index.php">Live Now!<span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="../index.php">Live Now!<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="newchannel.php">New Channel</a>
@@ -59,9 +59,9 @@ $history = (query($query));
             <div class="col-sm-10 pl-4">
                 <!-- Baris untuk kurva pertumbuhan -->
                 <h2>History</h2>
-                <div class="row">
-                    <div class="col">
-                        <table>
+                <div class="row pl-4">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -71,16 +71,17 @@ $history = (query($query));
                                     <th>End Date</th>
                                     <th>Status</th>
                                 </tr>
-                                <?php for ($i = 0; $i < 10; $i++) : ?>
+                                <?php $i= 1;?>
+                                <?php foreach ($history as $hist) : ?>
                                     <tr>
-                                        <td><?= $i + 1; ?></td>
-                                        <td><?=  $history[count($history) - 1 - $i]["dates"]; ?></td>
-                                        <td><?=  $history[count($history) - 1 - $i]["times"]; ?></td>
-                                        <td><?=  $history[count($history) - 1 - $i]["rawdata"]; ?></td>
-                                        <td><?=  $history[count($history) - 1 - $i]["volt"]; ?></td>
-                                        <td><?=  $history[count($history) - 1 - $i]["ints"]; ?></td>
+                                        <td><?= $i++; ?></td>
+                                        <td><?=  $hist["start"]; ?></td>
+                                        <td><?=  $hist["title"]; ?></td>
+                                        <td><?=  $hist["description"]; ?></td>
+                                        <td>running</td>
+                                        <td>ok</td>
                                     </tr>
-                                <?php endfor; ?>
+                                <?php endforeach; ?>
                             </thead>
                         </table>
 
