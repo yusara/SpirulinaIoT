@@ -5,6 +5,18 @@ label {
     width: 300px;
     /* text-align: right; */
 }
+.nav-style{
+    background-color: #188751;
+}
+.nav-style .nav-style-item{
+    background-color: inherit;
+}
+.sidebar-style a{
+    color: black;
+}
+.sidebar-style:hover{
+    background-color: #cfcfcf;
+}
 
 input {
     display: inline-block;

@@ -23,7 +23,7 @@ if (isset($_POST['masuk'])) {
             //set session
             $_SESSION['login'] = true;
             $_SESSION['nama'] = $nama;            
-            header("Location: index.php");
+            header("Location: ../index.php");
             exit;
         }
         else{
@@ -46,7 +46,7 @@ if (isset($_POST['masuk'])) {
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <link rel="stylesheet" href="../css/bootstrap.css">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/login-style.css">
 
     <title>Document</title>
 </head>
@@ -54,25 +54,33 @@ if (isset($_POST['masuk'])) {
 <body>
     <div class="container mt-5">
         <div class="row">
-            <div class="col-md-4 offset-4 border-dark">
-                <h2 class="text-center">Login</h2>
-                <form action="" method="post">
-                    <div class="row form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" name="email" id="email">
+            <div class="col">
+                <div class="card mx-auto" style="width: 24rem;">
+                    <div class="card-body m-3">
+                        <h2 class="text-center">Login</h2>
+                        <form action="" method="post">
+                            <div class="row form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" name="email" id="email">
+                            </div>
+                            <div class="row form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" name="pass" id="pass">
+                            </div>
+                            <div class="row">
+                                <p>Belum punya akun? <a href="signup.php">Daftar</a></p>
+                            </div>
+                            <button type="submit" name="masuk" class="btn btn-primary btn-block">Masuk</button>
+                        </form>
                     </div>
-                    <div class="row form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" name="pass" id="pass">
-                    </div>
-                    <div class="row">
-                        <p>Belum punya akun? <a href="signup.php">Daftar</a></p>
-                    </div>
-                    <button type="submit" name="masuk" class="btn btn-primary btn-block">Masuk</button>
-                </form>
+                </div>
             </div>
         </div>
     </div>
+    <footer class="fixed-bottom">
+      
+      <p class="mt-3 text-center">Copyright &copy; 2020 <a href="https://www.linkedin.com/in/afdhal-yusra-590088113">Afdhal Yusra</a>. All rights reserved</p>
+    </footer>
 
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

@@ -4,7 +4,7 @@ if (!isset($_SESSION['login'])) {
   header("Location: /spirulinaiot/page/login.php");
   exit;
 }
-require 'api/function.php';
+require 'api/function.php'; 
 
 $query = "SELECT * FROM device0001";
 $rawdata = query($query);
@@ -28,26 +28,36 @@ $rawdata = query($query);
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg sticky-top" style="background-color: #188751;">
-    <a class="text-light" href="index.php" style="font-size: 25px;">SpirulinaIoT</a>
-    <a href="" class="text-light ml-auto"><?= $_SESSION['nama']; ?></a>
-    <a href="logout.php" class="text-light ml-2">Logout</a>
-    <!-- <a href="logout.php" class=""></a> -->
+  <nav class="navbar navbar-expand-lg sticky-top nav-style">
+    <ul class="navbar-nav nav-style mr-auto">
+      <li class="nav-item active">
+        <a class="text-light navbar-brand" href="index.php" style="font-size: 18px;">SpirulinaIoT</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav nav-style">
+      <li class="nav-item dropdown">
+        <a class="nav-link text-light dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-ex><?= $_SESSION['nama']; ?></a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="">My Profile</a>
+          <a class="dropdown-item" href="logout.php">Logout</a>
+        </div>
+      </li>
+    </ul>
   </nav>
 
   <!-- Container for main page-->
-  <div class="pt-2 pr-5 pr-2">
+  <div class="pr-5 pr-2">
     <div class="row no-gutters">
       <!-- Start of sticky sidebar-->
       <nav class="col-sm-2 border-right">
         <ul class="nav flex-column">
-          <li class="nav-item active" href="#">
-            <a class="nav-link" href="index.php">Live Now!<span class="sr-only">(current)</span></a>
+          <li class="nav-item active sidebar-style" href="#">
+            <a class="nav-link" href="index.php">Live Now!</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item sidebar-style">
             <a class="nav-link" href="newchannel.php">New Channel</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item sidebar-style">
             <a class="nav-link" href="history.php">History</a>
           </li>
         </ul>
@@ -154,10 +164,7 @@ $rawdata = query($query);
       </div>
 
     </div>
-    <footer>
-      <hr>
-      <p class="text-center">Copyright &copy; 2020 Afdhal Yusra. All rights reserved</p>
-    </footer>
+    
 
     <!-- End of main container-->
 
