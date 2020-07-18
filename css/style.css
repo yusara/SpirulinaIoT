@@ -11,7 +11,7 @@ label {
 .nav-style .nav-style-item{
     background-color: inherit;
 }
-.sidebar-style a{
+li a{
     color: black;
 }
 .sidebar-style:hover{
@@ -22,3 +22,30 @@ input {
     display: inline-block;
     float: left;
 }
+canvas{
+
+    width:750px !important;
+    height:350px !important;
+  
+  }
+
+.sidenav a, .dropdown-btn {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    /* font-size: 20px; */
+    /* color: #818181; */
+    display: block;
+    border: none;
+    background: none;
+    width:100%;
+    text-align: left;
+    cursor: pointer;
+    outline: none;
+  }
+
+  .dropdown-container {
+    /* display: none; */
+    /* background-color: #1d6e21; */
+    padding-left: 8px;
+  }
+

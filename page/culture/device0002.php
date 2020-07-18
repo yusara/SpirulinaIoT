@@ -4,10 +4,7 @@ if (!isset($_SESSION['login'])) {
   header("Location: /spirulinaiot/page/login.php");
   exit;
 }
-require 'api/function.php'; 
-$user = $_SESSION['nama'];
-$query = "SELECT * FROM device_table WHERE user = '$user' AND channel_status = 'ACTIVE'";
-$livechannel = (query($query));
+require '../../api/function.php'; 
 
 $query = "SELECT * FROM device0003";
 $rawdata = query($query);
@@ -21,9 +18,8 @@ $rawdata = query($query);
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="css/bootstrap.css"> <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="css/style.css"> <!-- File CSS -->
-  <link rel="stylesheet" href="css/style2.css">
+  <link rel="stylesheet" href="../../css/bootstrap.css"> <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="../../css/style.css"> <!-- File CSS -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script> <!-- Library Chart Js -->
 
 
@@ -64,28 +60,18 @@ $rawdata = query($query);
     <div class="row no-gutters">
       <!-- Start of sticky sidebar-->
       <nav class="col-sm-2 border-right">
-        <ul class="sidenav nav flex-column">
-            <li class="nav-item active dropdown" href="#">
-                <!-- <a class="nav-link" href="../index.php">Live Now!</a>  -->
-                
-                <a class="nav-link dropdown-btn dropdown-toggle sidebar-style" href="index.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Live Now!
-                </a>
-                <div class="dropdown-container">
-                    <?php foreach($livechannel as $lvn):?>
-                        <a href="culture/<?= $lvn['deviceid'];?>.php" class="sidebar-style"><?= $lvn['channelname'] ?></a>
-                    <?php endforeach;?>
-                </div>
-            </li>
-            <li></li>
-            <li class="nav-item sidebar-style">
-                <a class="nav-link" href="page/newchannel.php">New Channel</a>
-            </li>
-            <li class="nav-item sidebar-style">
-                <a class="nav-link" href="page/history.php">History</a>
-            </li>
+        <ul class="nav flex-column">
+          <li class="nav-item active sidebar-style" href="#">
+            <a class="nav-link" href="index.php">Live Now!</a>
+          </li>
+          <li class="nav-item sidebar-style">
+            <a class="nav-link" href="page/newchannel.php">New Channel</a>
+          </li>
+          <li class="nav-item sidebar-style">
+            <a class="nav-link" href="page/history.php">History</a>
+          </li>
         </ul>
-    </nav>
+      </nav>
       <!-- End of sticky sidebar -->
 
       <!-- Start of main page-->

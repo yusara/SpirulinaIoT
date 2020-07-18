@@ -6,13 +6,14 @@
     menjadi data rata per hari*/  
     
     $conn = mysqli_connect("localhost", "root", "" , "spirulinaiot");
-    $data = "SELECT * FROM device0001";
+    $data = "SELECT * FROM device0003";
     $result = mysqli_query($conn, $data);
     $rows = [];
     $spirulina = [];
     $tanggal = [];
     $tgl = [];
     $spl = [];
+
     while ($row = mysqli_fetch_assoc($result)) {
         $rows[] = $row;
         $spirulina["dates"] = $row["dates"];
@@ -23,12 +24,12 @@
     }
     // echo json_encode($spl);
 
-    //Array untuk tanggal
+    // //Array untuk tanggal
     $datesarray = array();
     $datesarray = array_values(array_unique($tgl));
 
-    // var_dump($datesarray);
-    // echo "<br>";
+    // // var_dump($datesarray);
+    // // echo "<br>";
 
     $voltarray = array();
     for ($j = 0; $j < count($datesarray); $j++) {
@@ -47,7 +48,7 @@
         array_push($voltarray, $avg);
     }
     // var_dump($voltarray);
-    // echo "<br>";
+    // // echo "<br>";
 
     $truearray = array();
     for ($k = 0; $k < count($datesarray); $k++) {
@@ -56,6 +57,6 @@
         $momentaryarray["adso"] = $voltarray[$k];
         array_push($truearray, $momentaryarray);
     }
-    // var_dump($truearray);
+    var_dump($truearray);
     echo json_encode($truearray);
 

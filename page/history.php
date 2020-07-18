@@ -1,15 +1,20 @@
 <?php
+
+
 session_start();
 if (!isset($_SESSION['login'])) {
     header("Location: login.php");
     exit;
 }
 require '../api/function.php';
+$user = $_SESSION['nama'];
+$query = "SELECT * FROM device_table WHERE user = '$user' AND channel_status = 'ACTIVE'";
+$livechannel = (query($query));
 
 $user = $_SESSION['nama'];
-$query = "SELECT * FROM channels WHERE user = '$user'";
+$query = "SELECT * FROM device_table WHERE user = '$user'";
 $history = (query($query));
-// var_dump($rawdata);
+// var_dump($history);
 ?>
 
 <!doctype html>
@@ -29,26 +34,57 @@ $history = (query($query));
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg sticky-top" style="background-color: #188751;">
-        <a class="text-light" href="index.php" style="font-size: 25px;">SpirulinaIoT</a>
-        <a href="" class="text-light ml-auto"><?= $_SESSION['nama']; ?></a>
-        <a href="logout.php" class="text-light ml-2">Logout</a>
-        <!-- <a href="logout.php" class=""></a> -->
+    <nav class="navbar navbar-expand-lg sticky-top nav-style">
+        <ul class="navbar-nav nav-style mr-auto">
+        <li class="nav-item active">
+            <a class="text-light navbar-brand" href="index.php" style="font-size: 20px;">SpirulinaIoT</a>
+        </li>
+        <ul class="ml-3 navbar-nav nav-style">
+        <li class="nav-item">
+            <a href="" class="text-light nav nav-link">About</a>
+        </li>
+        <li>
+            <a href="" class="text-light nav nav-link">Blog</a>
+        </li>
+        <li>
+            <a href="" class="text-light nav nav-link">Contact Us</a>
+        </li>
+        </ul>
+        </ul>
+        <ul class="navbar-nav nav-style">
+        <li class="nav-item dropdown">
+            <a class="nav-link text-light dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-ex><?= $_SESSION['nama']; ?></a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="">My Profile</a>
+            <a class="dropdown-item" href="logout.php">Logout</a>
+            </div>
+        </li>
+        </ul>
     </nav>
 
     <!-- Container for main page-->
-    <div class="mt-2">
+    <div class="pr-5 pr-2">
         <div class="row no-gutters">
             <!-- Start of sticky sidebar-->
             <nav class="col-sm-2 border-right">
-                <ul class="nav flex-column">
-                    <li class="nav-item active" href="#">
-                        <a class="nav-link" href="index.php">Live Now!<span class="sr-only">(current)</span></a>
+                <ul class="sidenav nav flex-column">
+                    <li class="nav-item active dropdown" href="#">
+                        <!-- <a class="nav-link" href="../index.php">Live Now!</a>  -->
+                        
+                        <a class="nav-link dropdown-btn dropdown-toggle sidebar-style" href="../index.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Live Now!
+                        </a>
+                        <div class="dropdown-container">
+                            <?php foreach($livechannel as $lvn):?>
+                                <a href="culture/<?= $lvn['deviceid'];?>.php" class="sidebar-style"><?= $lvn['channelname'] ?></a>
+                            <?php endforeach;?>
+                        </div>
                     </li>
-                    <li class="nav-item">
+                    <li></li>
+                    <li class="nav-item sidebar-style">
                         <a class="nav-link" href="newchannel.php">New Channel</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item sidebar-style">
                         <a class="nav-link" href="history.php">History</a>
                     </li>
                 </ul>
@@ -60,27 +96,29 @@ $history = (query($query));
                 <!-- Baris untuk kurva pertumbuhan -->
                 <h2>History</h2>
                 <div class="row">
-                    <div class="col">
-                        <table>
+                    <div class="col table-responsive">
+                        <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Start Date</th>
-                                    <th>Title</th>
-                                    <th>Description</th>
-                                    <th>End Date</th>
-                                    <th>Status</th>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Start Date</th>
+                                    <th scope="col">End Date</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Action</th>
                                 </tr>
-                                <?php for ($i = 0; $i < 10; $i++) : ?>
+                                <?php $i = 1; foreach ($history as $id => $hst) : ?>
                                     <tr>
-                                        <td><?= $i + 1; ?></td>
-                                        <td><?=  $history[count($history) - 1 - $i]["dates"]; ?></td>
-                                        <td><?=  $history[count($history) - 1 - $i]["times"]; ?></td>
-                                        <td><?=  $history[count($history) - 1 - $i]["rawdata"]; ?></td>
-                                        <td><?=  $history[count($history) - 1 - $i]["volt"]; ?></td>
-                                        <td><?=  $history[count($history) - 1 - $i]["ints"]; ?></td>
+                                        <td scope="row"><?= $i; ?></td>
+                                        <td width="200"><?=  $hst["channelname"]; ?></td>
+                                        <td width="400"><?=  $hst["description"]; ?></td>
+                                        <td><?=  $hst["startdate"]; ?></td>
+                                        <td><?=  $hst["enddate"]; ?></td>
+                                        <td><?=  $hst["channel_status"]; ?></td>
+                                        <td><a href="">Download data</a></td>
                                     </tr>
-                                <?php endfor; ?>
+                                <?php $i++; endforeach; ?>
                             </thead>
                         </table>
 

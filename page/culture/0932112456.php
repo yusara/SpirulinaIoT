@@ -1,53 +1,4 @@
 <?php
-
-$conn = mysqli_connect("localhost", "root", "", "spirulinaiot");
-
-function query($query)
-{
-    global $conn;
-    $result = mysqli_query($conn, $query);
-    $rows = [];
-    while ($row = mysqli_fetch_assoc($result)) {
-        $rows[] = $row;
-    }
-    return $rows;
-}
-function generateTable($table_name){
-    global $conn;
-    $query = "CREATE TABLE ". $table_name . "(
-        id int not null primary key auto_increment,
-        dates date not null,
-        times time not null,
-        rawdata float(10,3) not null,
-        volt float(10,3) not null,
-        adso float(10,3) not null 
-    ) ;";
-    // $query = "CREATE TABLE ". $table_name ."(\n"
-
-    // . "        id int not null primary key auto_increment,\n"
-
-    // . "        dates date not null,\n"
-
-    // . "        times time not null,\n"
-
-    // . "        rawdata float(10,3) not null,\n"
-
-    // . "        volt float(10,3) not null,\n"
-
-    // . "        adso float(10,3) not null \n"
-
-    // . "    )";
-    if(mysqli_query($conn, $query)){
-        return "Table created successfully.";
-    } else{
-        return "ERROR:   Could not able to execute $query. " . mysqli_error($conn);
-    }
-    mysqli_close($conn);
-}
-
-function generatePage($page_name){
-
-$html_template = '<?php
     session_start();
     if (!isset($_SESSION["login"])) {
     header("Location: /spirulinaiot/page/login.php");
@@ -247,11 +198,4 @@ $html_template = '<?php
 
 </body>
 
-</html>';
-    $page_path = "../page/culture/";
-    $myfile = fopen($page_path . $page_name . ".php", "w") or die("Unable to open file!");
-    fwrite($myfile, $html_template);
-    fclose($myfile);
-    }
-
-?>
+</html>
