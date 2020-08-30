@@ -18,7 +18,7 @@ if (isset($_POST['masuk'])) {
         
         $row = mysqli_fetch_assoc($result);
         $nama = $row["username"];
-        $profile_picture = $row["profile_picture"];
+        // $profile_picture = $row["profile_picture"];
         if ($pass == $row["password"]) {
             //set session
             $_SESSION['login'] = true;

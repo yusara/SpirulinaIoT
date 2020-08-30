@@ -16,16 +16,18 @@ if (isset($_POST['masuk'])) {
     $title = $_POST['title'];
     $description = $_POST['description'];
     $deviceid = $_POST['deviceid'];
-    $startdate = $_POST['startdate'];
+    // $startdate = $_POST['startdate'];
+    $device_name = "dvc".$deviceid;
     // $getdate = getdate();
     // $startdate = $getdate["year"] . "-" . $getdate["mon"] . "-" . $getdate["mday"];
     // $startdate = $_POST['startdate'];
     $status = 'ACTIVE';
 
-    $query = "INSERT INTO device_table VALUES ('','$user','$title','$deviceid','$description','$startdate','','$status')";
+    $query = "INSERT INTO device_table VALUES ('','$user','$title','$device_name','$description',curdate(),'','$status')";
     mysqli_query($conn, $query);
     if( mysqli_affected_rows($conn)>0 ){
-        generatePage($deviceid);
+        generatePage($device_name);
+        generateTable($device_name);
         echo "  <script> alert('Success to add data'); 
                     document.location.href = '../index.php'
                 </script>";
@@ -130,12 +132,12 @@ if (isset($_POST['masuk'])) {
                     </div>
                     <div class="form-group">
                         <label for="deviceid">Device ID</label><br>
-                        <input type="text" name="deviceid" class="form-control" id="deviceid">
+                        <input type="text" name="deviceid" class="form-control" id="deviceid" maxlength="7">
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label for="deviceid">Start date</label><br>
                         <input type="date" name="startdate" class="form-control" id="startdate">
-                    </div>
+                    </div> -->
                     <button type="submit" name="masuk" class="btn btn-primary mt-2">Submit</button>
                 </form>
 

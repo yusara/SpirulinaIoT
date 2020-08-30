@@ -1,79 +1,4 @@
 <?php
-
-$conn = mysqli_connect("localhost", "root", "", "spirulinaiot");
-// $conn = mysqli_connect("localhost", "id11341353_spirulinaiot", "75648988ipa", "id11341353_spirulinaiot");
-function export($device_id){
-//export.php  
-    global $conn;
-    header('Content-Type: text/csv; charset=utf-8');  
-    header('Content-Disposition: attachment; filename=data.csv');  
-    $output = fopen("php://output", "w");  
-    fputcsv($output, array('id', 'dates', 'times', 'rawdata', 'volt', 'adso'));  
-    $query = "SELECT * from $device_id";  
-    $result = mysqli_query($conn, $query);  
-    while($row = mysqli_fetch_assoc($result))  
-    {  
-        fputcsv($output, $row);  
-    }  
-    fclose($output);  
-}
-
-
-function query($query)
-{
-    global $conn;
-    $result = mysqli_query($conn, $query);
-
-    $rows = [];
-    if ($result){
-        while ($row = mysqli_fetch_assoc($result)) {
-            $rows[] = $row;
-        }
-        return $rows;
-    } else {
-        return $rows;
-    }
-}
-function deleteChannel($device_id){
-    global $conn;
-    $query1 = "DROP TABLE ". $device_id;
-    mysqli_query($conn, $query1);
-    $query2 = "DELETE FROM `device_table` WHERE `deviceid` LIKE '%$device_id%'";
-    // $query2 = "DELETE from device_table WHERE device_table.deviceid=$device_id";
-    mysqli_query($conn, $query2);
-    $file = "$device_id.php";
-    $filepath = "../page/culture/";
-
-    if (!unlink($filepath.$file)) {  
-        return ("$file cannot be deleted due to an error");  
-    }  
-    else {  
-        return ("$file has been deleted");  
-    }
-}
-
-function generateTable($table_name){
-    global $conn;
-    $query = "CREATE TABLE ". $table_name . "(
-        id int not null primary key auto_increment,
-        dates date not null,
-        times time not null,
-        rawdata float(10,3) not null,
-        volt float(10,3) not null,
-        adso float(10,3) not null 
-    ) ;";
-
-    if(mysqli_query($conn, $query)){
-        return "Table created successfully.";
-    } else{
-        return "ERROR:   Could not able to execute $query. " . mysqli_error($conn);
-    }
-    mysqli_close($conn);
-}
-
-function generatePage($page_name){
-    $page_create = $page_name;
-    $html_template = '<?php
 session_start();
 if (!isset($_SESSION["login"])) {
 header("Location: /spirulinaiot/page/login.php");
@@ -81,12 +6,14 @@ exit;
 }
 require "../../api/function.php";
 $user = $_SESSION["nama"];
-$page_create = "'.$page_create.'";
+$page_create = "dvc0000002";
 
 //livechannel sidebar
 $status = "ACTIVE";
 $query1 = "SELECT * FROM device_table WHERE user = \"$user\" AND channel_status = \"$status\"";
 $livechannel = (query($query1));
+// var_dump($livechannel);
+
 $idquery = "SELECT * FROM device_table WHERE deviceid LIKE \"$page_create\"";
 $channelid = query($idquery);
 // var_dump($channelid);
@@ -310,9 +237,7 @@ $rawdata = query($query2);
 }
 
 async function getdata(data){
-    // const url = "api/chartdata.php"
     const url = "../../api/graphdata.php?deviceid="+data;
-    // const url = "api/graphdata.php?device=device0003";
     console.log(url);
     const response = await fetch(url);
     const jsondata = await response.json();
@@ -333,11 +258,4 @@ async function getdata(data){
 
 </body>
 
-</html>';
-    $page_path = "../page/culture/";
-    $myfile = fopen($page_path . $page_name . ".php", "w") or die("Unable to open file!");
-    fwrite($myfile, $html_template);
-    fclose($myfile);
-    }
-
-?>
+</html>

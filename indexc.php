@@ -6,12 +6,17 @@ if (!isset($_SESSION['login'])) {
 }
 require 'api/function.php'; 
 $user = $_SESSION['nama'];
-$query = "SELECT * FROM device_table WHERE user = '$user' AND channel_status = 'ACTIVE'";
-$livechannel = (query($query));
 
-$query = "SELECT * FROM device0003";
-$rawdata = query($query);
-// var_dump($rawdata);
+//livechannel sidebar
+$query1 = "SELECT * FROM device_table WHERE user = '$user' AND channel_status = 'ACTIVE'";
+$livechannel = (query($query1));
+
+$query2 = "SELECT * FROM device0003";
+$rawdata = query($query2);
+
+$query3 = "SELECT * FROM device_table WHERE deviceid LIKE 'device0003'";
+$graph = query($query3);
+
 ?>
 
 <!doctype html>
@@ -73,7 +78,7 @@ $rawdata = query($query);
                 </a>
                 <div class="dropdown-container">
                     <?php foreach($livechannel as $lvn):?>
-                        <a href="culture/<?= $lvn['deviceid'];?>.php" class="sidebar-style"><?= $lvn['channelname'] ?></a>
+                        <a href="page/culture/<?= $lvn['deviceid'];?>.php" class="sidebar-style"><?= $lvn['channelname'] ?></a>
                     <?php endforeach;?>
                 </div>
             </li>
@@ -134,7 +139,8 @@ $rawdata = query($query);
         <div class="row kurvapertumbuhan text-center">
           <div class="col">
             <p align="center">
-            <canvas id="Absorbance" width="200" height="100"></canvas>
+            <!-- <canvas id="Absorbance" width="400" height="300"></canvas> -->
+            <canvas id="Absorbance"></canvas>
             </p>
           </div>
         </div>
@@ -175,7 +181,6 @@ $rawdata = query($query);
 
     </div>
     <footer class="">
-      
       <p class="mt-3 text-center">Copyright &copy; 2020 <a href="https://www.linkedin.com/in/afdhal-yusra-590088113">Afdhal Yusra</a>. All rights reserved</p>
     </footer>
 
@@ -187,83 +192,63 @@ $rawdata = query($query);
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-    <!-- <script type="text/javascript" src="api/drawlinechart.js"></script> -->
+    <!-- <script type="text/javascript" src="api/drawgraph.js"> -->
     <script>
-        // chartAbsorbance();
-        
-        
-        
-//         async function chartAbsorbance(){
-//         await getdata();
-//         var ctx = document.getElementById('Absorbance').getContext('2d');
-//         var myChart = new Chart(ctx, {
-//         type: 'line',
-//         data: { 
-//         labels: jsarray, 
-//         datasets: [
-//                 {label: 'Kurva Adsorbansi', 
-//                 data: jsdata,              
-//                 backgroundColor: 'rgba( 255,99,132,5)',
-//                 borderColor: 'rgba(255, 159, 64, 1)',
-//                 borderWidth: 3,
-//                 fill:false
-//         }]
-//         },
-//         options: {
-//         scales: {
-//                 yAxes: [{
-//                 ticks: {
-//                 beginAtZero: true
-//                 }
-//                 }]
-//         }
-//         }
-//         });
-// 
+      var data = "<?= $graph[0]["deviceid"];?>";
+      // var data = "device0003";
+      // console.log(data);
+      chartAbsorbance(data);
+
+      async function chartAbsorbance(data){
+        await getdata(data);
+
         var ctx = document.getElementById('Absorbance').getContext('2d');
         var myChart = new Chart(ctx, {
         type: 'line',
         data: { 
-        labels: [1,2,3,4,5,6,7,8,9,10,11,12,13,14], 
-        datasets: [
-                {label: 'Kurva Absorbansi', 
-                data: [-0.668,0.322,0.205,0.362,0.397,0.406,0.700,0.904,0.622,0.463,0.528,0.670,0.830,0.480],              
-                backgroundColor: 'rgba( 255,99,132,5)',
-                borderColor: 'rgba(255, 159, 64, 1)',
-                borderWidth: 3,
-                fill:false
+        labels: jsarray, 
+        datasets: [{
+            label: 'Kurva Absorbansi', 
+            data: jsdata,              
+            backgroundColor: 'rgba( 255,99,132,5)',
+            borderColor: 'rgba(255, 159, 64, 1)',
+            borderWidth: 3,
+            fill:false
         }]
         },
         options: {
         scales: {
-                yAxes: [{
-                ticks: {
-                beginAtZero: true
-                }
-                }]
+            yAxes: [{
+            ticks: {
+            beginAtZero: true
+            }
+            }]
         }
         }
         });
-        // async function getdata(){
-        //         const url = "api/chartdata.php"
-        //         // const url = "api/graphdata.php"
-        //         const response = await fetch(url);
-        //         const jsondata = await response.json();
+    }
 
-        //         jsarray = [];
-        //         jsdata = [];
+    async function getdata(data){
+        // const url = "api/chartdata.php"
+        const url = "api/graphdata.php?deviceid="+data;
+        // const url = "api/graphdata.php?device=device0003";
+        console.log(url);
+        const response = await fetch(url);
+        const jsondata = await response.json();
 
-        //         for (let i= 0; i < Object.keys(jsondata).length; i++) {
-        //                 jsarray.push(jsondata[i]['dates']);
-        //                 jsdata.push(jsondata[i]['adso']);
-        //                 // console.log(jsarray);
-        //         }
+        jsarray = [];
+        jsdata = [];
 
-        //         console.log(jsarray);
-        //         console.log(jsdata);
-        // }
-        </script>
+        for (let i= 0; i < Object.keys(jsondata).length; i++) {
+                jsarray.push(jsondata[i]['dates']);
+                jsdata.push(jsondata[i]['adso']);
+                // console.log(jsarray);
+        }
 
+        console.log(jsarray);
+        console.log(jsdata);
+    }
+    </script>
 </body>
 
 </html>

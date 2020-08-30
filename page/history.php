@@ -1,20 +1,33 @@
 <?php
-
-
 session_start();
 if (!isset($_SESSION['login'])) {
     header("Location: login.php");
     exit;
 }
+
 require '../api/function.php';
 $user = $_SESSION['nama'];
-$query = "SELECT * FROM device_table WHERE user = '$user' AND channel_status = 'ACTIVE'";
-$livechannel = (query($query));
+$query1 = "SELECT * FROM device_table WHERE user = '$user' AND channel_status = 'ACTIVE'";
+$livechannel = (query($query1));
 
-$user = $_SESSION['nama'];
-$query = "SELECT * FROM device_table WHERE user = '$user'";
-$history = (query($query));
-// var_dump($history);
+$query2 = "SELECT * FROM device_table WHERE user = '$user'";
+$history = (query($query2));
+
+if(isset($_GET['delete'])){
+    $deviceid = $_GET['delete'];
+    $message = deleteChannel($deviceid);
+    if( mysqli_affected_rows($conn)>0 ){
+        echo "  <script> alert('".$message."'); 
+                    document.location.href = 'history.php'
+                </script>";
+    }
+    else{
+        echo "  <script> alert('".$message."');
+                    document.location.href = 'history.php'
+                </script>";
+    }
+}
+
 ?>
 
 <!doctype html>
@@ -37,7 +50,7 @@ $history = (query($query));
     <nav class="navbar navbar-expand-lg sticky-top nav-style">
         <ul class="navbar-nav nav-style mr-auto">
         <li class="nav-item active">
-            <a class="text-light navbar-brand" href="index.php" style="font-size: 20px;">SpirulinaIoT</a>
+            <a class="text-light navbar-brand" href="../index.php" style="font-size: 20px;">SpirulinaIoT</a>
         </li>
         <ul class="ml-3 navbar-nav nav-style">
         <li class="nav-item">
@@ -116,7 +129,10 @@ $history = (query($query));
                                         <td><?=  $hst["startdate"]; ?></td>
                                         <td><?=  $hst["enddate"]; ?></td>
                                         <td><?=  $hst["channel_status"]; ?></td>
-                                        <td><a href="">Download data</a></td>
+                                        <td>
+                                            <a href="../api/export.php?export=<?= $hst["deviceid"];?>" class="badge badge-primary">Download</a> 
+                                            <a href="?delete=<?= $hst["deviceid"];?>" class="badge badge-danger">Delete</a>
+                                        </td>
                                     </tr>
                                 <?php $i++; endforeach; ?>
                             </thead>
@@ -129,10 +145,10 @@ $history = (query($query));
             </div>
 
         </div>
-        <footer class="fixed-bottom">
+        <!-- <footer class="fixed-bottom">
             <hr>
             <p class="text-center">Copyright &copy; 2020 Afdhal Yusra. All rights reserved</p>
-        </footer>
+        </footer> -->
 
         <!-- End of main container-->
 

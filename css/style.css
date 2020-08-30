@@ -1,6 +1,18 @@
+html , body {
+    min-height:100vh;  
+    height:100%;
+    max-width: 1500px;
+    margin: 0 auto;
+    padding-top: 00px; 
+}
+
+.container .row .col-md-6 { 
+    height: 100vh;
+    overflow: auto;  
+  } 
+
 label {
     display: inline-block;
-    float: left;
     clear: left;
     width: 300px;
     /* text-align: right; */
@@ -20,14 +32,13 @@ li a{
 
 input {
     display: inline-block;
-    float: left;
 }
-canvas{
+/* canvas{
 
     width:750px !important;
     height:350px !important;
   
-  }
+  } */
 
 .sidenav a, .dropdown-btn {
     padding: 6px 8px 6px 16px;
@@ -48,4 +59,5 @@ canvas{
     /* background-color: #1d6e21; */
     padding-left: 8px;
   }
+
 
